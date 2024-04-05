@@ -22,9 +22,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
 import com.example.android.dagger.main.MainActivity
@@ -34,10 +36,14 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var loginViewModel: LoginViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val loginViewModel: LoginViewModel by viewModels {
+        viewModelFactory
+    }
     private lateinit var errorTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.loginComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 

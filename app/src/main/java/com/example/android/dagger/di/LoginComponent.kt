@@ -4,7 +4,7 @@ import com.example.android.dagger.login.LoginActivity
 import dagger.Subcomponent
 
 @ActivityScope
-@Subcomponent
+@Subcomponent(modules = [ViewModelModule::class, ViewModelFactoryModule::class])
 interface LoginComponent {
 
     // Factory to create instances of LoginComponent

@@ -2,7 +2,9 @@ package com.example.android.dagger.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.dagger.main.MainViewModel
+import com.example.android.dagger.ViewModelFactory
+import com.example.android.dagger.login.LoginViewModel
+import com.example.android.dagger.user.UserManager
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -23,10 +25,11 @@ class ViewModelModule {
 
     @Provides
     @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun provideMainViewModel(
+    @ViewModelKey(LoginViewModel::class)
+    fun provideLoginViewModel(
+        userManager: UserManager
     ): ViewModel {
-        return MainViewModel()
+        return LoginViewModel(userManager)
     }
 }
 

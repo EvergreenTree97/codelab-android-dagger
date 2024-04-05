@@ -23,11 +23,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
-import com.example.android.dagger.di.AppComponent
 import com.example.android.dagger.login.LoginActivity
 import com.example.android.dagger.registration.RegistrationActivity
 import com.example.android.dagger.settings.SettingsActivity
-import com.example.android.dagger.user.UserManager
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -35,10 +33,11 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as MyApplication).appComponent.userManager().userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
         val userManager = (application as MyApplication).appComponent.userManager()
-        if (!userManager.isUserLoggedIn())  {
+        if (!userManager.isUserLoggedIn()) {
             if (!userManager.isUserRegistered()) {
                 startActivity(Intent(this, RegistrationActivity::class.java))
                 finish()
